@@ -1,1 +1,1 @@
-setTimeout(() => console.log('Timeout 200'), 200);
+setTimeout(() => console.log('Timeout 300'), 300);
