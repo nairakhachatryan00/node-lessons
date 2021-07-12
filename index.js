@@ -26,5 +26,5 @@ logger.emit('message', 'Hello, World!');
 logger.emit('message', 'Hello, Armenia!');
 logger.emit('login', 'Naira');
 logger.emit('login', 'Liza');
-logger.emit('getUsers', users);
+logger.emit('getUsers');
 
