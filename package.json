@@ -1,0 +1,27 @@
+{
+  "name": "lessons",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nairakhachatryan00/node-lessons.git"
+  },
+  "author": "Naira Khachatryan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nairakhachatryan00/node-lessons/issues"
+  },
+  "homepage": "https://github.com/nairakhachatryan00/node-lessons#readme",
+  "dependencies": {
+    "minimist": "^1.2.5",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "mocha": "^9.0.2"
+  }
+}
