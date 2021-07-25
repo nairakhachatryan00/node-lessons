@@ -89,22 +89,6 @@ class Hybrid extends CarOptions {
         return this.decoratedCar.cost() + 300;
     }
 }
-
-class OilBased extends CarOptions {
-    decoratedCar: Car;
-
-    constructor(car: Car) {
-        super();
-        this.decoratedCar = car;
-    }
-
-    getInfo(): string {
-        return this.decoratedCar.getInfo() + 'oil based engine.';
-    }
-    cost(): number {
-        return this.decoratedCar.cost() + 100;
-    }
-}
 let myCar = new Toyota(); //output "Toyota and price 1000$"
 // myCar = new Black(myCar);  //output "Toyota with black color decorated and price 1100$"
 // myCar = new FourDoors(new Black(myCar)); //output "Toyota with black color decorated and has 4 doors and price 1300$"
