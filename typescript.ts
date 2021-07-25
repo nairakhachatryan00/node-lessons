@@ -106,7 +106,8 @@ class OilBased extends CarOptions {
     }
 }
 let myCar = new Toyota(); //output "Toyota and price 1000$"
-// myCar = new Black(myCar);  //output "Toyota with black color decorated and price 1000$"
-// myCar = new FourDoors(new Black(myCar)); //output "Toyota with black color decorated and has 4 doors and price 1000$"
-myCar = new Hybrid(new FourDoors(new Black(myCar))); //output "Toyota with black color decorated and has 4 doors and your car has hybrid engine and price 1000$"
+// myCar = new Black(myCar);  //output "Toyota with black color decorated and price 1100$"
+// myCar = new FourDoors(new Black(myCar)); //output "Toyota with black color decorated and has 4 doors and price 1300$"
+// myCar = new Hybrid(new Black(myCar)); //output "Toyota with black color decorated and your car has hybrid engine and price 1400$"
+myCar = new Hybrid(new FourDoors(new Black(myCar))); //output "Toyota with black color decorated and has 4 doors and your car has hybrid engine and price 1600$"
 console.log(myCar.getInfo());
