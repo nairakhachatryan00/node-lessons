@@ -20,12 +20,8 @@ fs.exists(directory, (err) => {
             if(files && files.length) {
                 files.forEach(file => {
                     let filename = path.resolve(directory, file);
-                    let fileZip = path.resolve(`${directory}-zip`, file);
-                    console.log(fileZip, 'fileZip')
-                    const stream = fs.createReadStream(filename, {
-                        highWaterMark: 50,
-                        encoding: 'UTF-8'
-                    });
+                    let fileZip = path.resolve(`${directory}-zip`, path.parse(filename).name) + '.gzip';
+                    const stream = fs.createReadStream(filename);
                     const output = fs.createWriteStream(fileZip);
                     stream.pipe(zlib.createGzip()).pipe(output);
                 })
