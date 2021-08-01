@@ -1,5 +1,6 @@
 import Express from 'express';
 import BodyParser from 'body-parser';
+import { v4 as uuidv4 } from 'uuid';
 
 const app = Express();
 app.use(BodyParser.json());
@@ -13,7 +14,7 @@ let books = [
         "author": "Sharlot Bronte",
         "year": 1687,
         "category": "Romance",
-        "id": 1
+        "id": "6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b"
     },
     {
         "title": "A Game of Thrones",
@@ -21,69 +22,84 @@ let books = [
         "author": "George Raymond Richard Martin",
         "year": 1996,
         "category": "Fantasy",
-        "id": 2
+        "id": "6a1a613b-2e64-4127-a6e7-1fd00bcacc74"
     }
 ];
 
 app.get('/', (req, res) => {
-    let result = `<table style="border: 1px solid grey">
-        <thead>
-            <tr>
-              <th style="border: 1px solid grey">Id</th>
-              <th style="border: 1px solid grey">Title</th>
-              <th style="border: 1px solid grey">Description</th>
-              <th style="border: 1px solid grey">Author</th>
-              <th style="border: 1px solid grey">Year</th>
-            </tr>
-        </thead>
-        <tbody>`;
-    books.forEach(book => {
-        result += `<tr>
-                      <td style="border: 1px solid grey">${book.id}</td>
-                      <td style="border: 1px solid grey">${book.title}</td>
-                      <td style="border: 1px solid grey">${book.description.slice(0,50)}...</td>
-                      <td style="border: 1px solid grey">${book.author}</td>
-                      <td style="border: 1px solid grey">${book.year}</td>
-                   </tr>`;
-    })
-    result += `</tbody></table>`;
-    res.status(200).send(result);
+    // let result = `<table style="border: 1px solid grey">
+    //     <thead>
+    //         <tr>
+    //           <th style="border: 1px solid grey">Id</th>
+    //           <th style="border: 1px solid grey">Title</th>
+    //           <th style="border: 1px solid grey">Description</th>
+    //           <th style="border: 1px solid grey">Author</th>
+    //           <th style="border: 1px solid grey">Year</th>
+    //         </tr>
+    //     </thead>
+    //     <tbody>`;
+    // books.forEach(book => {
+    //     result += `<tr>
+    //                   <td style="border: 1px solid grey">${book.id}</td>
+    //                   <td style="border: 1px solid grey">${book.title}</td>
+    //                   <td style="border: 1px solid grey">${book.description.slice(0,50)}...</td>
+    //                   <td style="border: 1px solid grey">${book.author}</td>
+    //                   <td style="border: 1px solid grey">${book.year}</td>
+    //                </tr>`;
+    // })
+    // result += `</tbody></table>`;
+    res.status(200).send(books);
 });
 
 app.post('/', (req, res) => {
     let book = req.body;
+    let errMsg = [];
+    if(!book.title) {
+        errMsg.push('Title is required.')
+    }
+    if(!book.author) {
+        errMsg.push('Author is required.')
+    }
+    if(!book.year || (typeof book.year !== 'number') || book.year > 2021 ) {
+        errMsg.push('Year is required and need to less then 2021.')
+    }
+    if(errMsg.length) {
+        res.status(400).send(errMsg.join(' '));
+    }
+    book.id = uuidv4();
     books.push(book);
     res.status(201).send(book);
 });
 
 app.get('/books/:id', (req, res) => {
-    if(!books[req.params.id]) {
+    let index = books.findIndex(book => book.id === req.params.id);
+    if(index === -1) {
         res.status(404).send('The object not found');
     }
-    let book = books[req.params.id];
-    res.status(201).send(book);
+    res.status(201).send(books[index]);
 });
 
 app.put('/books/:id', (req, res) => {
-    if(!books[req.params.id]) {
+    let index = books.findIndex(book => book.id === req.params.id);
+    if(index === -1) {
         res.status(404).send('The object not found');
     }
-    let id = req.params.id;
-    books[id] = req.body;
-    res.status(201).send(books[id]);
+    books[index] = req.body;
+    res.status(201).send(books[index]);
 });
 
 app.patch('/books/:id', (req, res) => {
-    if(!books[req.params.id]) {
+    let index = books.findIndex(book => book.id === req.params.id);
+    if(index === -1) {
         res.status(404).send('The object not found');
     }
-    let id = req.params.id;
-    books[id] = Object.assign( books[id], req.body);
-    res.status(201).send(books[id]);
+    books[index] = Object.assign( books[index], req.body);
+    res.status(201).send(books[index]);
 });
 
 app.delete('/books/:id', (req, res) => {
-    if(!books[req.params.id]) {
+    let index = books.findIndex(book => book.id === req.params.id);
+    if(index === -1) {
         res.status(404).send('The object not found');
     }
     books = books.filter(book => book.id !== req.params.id)
