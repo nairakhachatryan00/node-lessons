@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js && npm run test",
+    "start": "node index.js",
+    "server": "nodemon index.js",
     "tsc": "tsc"
   },
   "repository": {
@@ -19,6 +21,8 @@
   },
   "homepage": "https://github.com/nairakhachatryan00/node-lessons#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
     "minimist": "^1.2.5",
     "request": "^2.88.2",
     "unzipper": "^0.10.11",
@@ -26,6 +30,7 @@
   },
   "devDependencies": {
     "mocha": "^9.0.2",
+    "nodemon": "^2.0.12",
     "typescript": "^4.3.5"
   }
 }
