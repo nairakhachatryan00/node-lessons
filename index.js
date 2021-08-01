@@ -87,7 +87,7 @@ app.delete('/books/:id', (req, res) => {
         res.status(404).send('The object not found');
     }
     books = books.filter(book => book.id !== req.params.id)
-    res.status(201).send(`The book deleted successfully`);
+    res.status(201).send(`The book successfully deleted`);
 });
 
 
