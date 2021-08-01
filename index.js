@@ -27,31 +27,36 @@ let books = [
 ];
 
 app.get('/', (req, res) => {
-    // let result = `<table style="border: 1px solid grey">
-    //     <thead>
-    //         <tr>
-    //           <th style="border: 1px solid grey">Id</th>
-    //           <th style="border: 1px solid grey">Title</th>
-    //           <th style="border: 1px solid grey">Description</th>
-    //           <th style="border: 1px solid grey">Author</th>
-    //           <th style="border: 1px solid grey">Year</th>
-    //         </tr>
-    //     </thead>
-    //     <tbody>`;
-    // books.forEach(book => {
-    //     result += `<tr>
-    //                   <td style="border: 1px solid grey">${book.id}</td>
-    //                   <td style="border: 1px solid grey">${book.title}</td>
-    //                   <td style="border: 1px solid grey">${book.description.slice(0,50)}...</td>
-    //                   <td style="border: 1px solid grey">${book.author}</td>
-    //                   <td style="border: 1px solid grey">${book.year}</td>
-    //                </tr>`;
-    // })
-    // result += `</tbody></table>`;
+    let result = `<table style="border: 1px solid grey">
+        <thead>
+            <tr>
+              <th style="border: 1px solid grey">Id</th>
+              <th style="border: 1px solid grey">Title</th>
+              <th style="border: 1px solid grey">Description</th>
+              <th style="border: 1px solid grey">Author</th>
+              <th style="border: 1px solid grey">Year</th>
+            </tr>
+        </thead>
+        <tbody>`;
+    books.forEach(book => {
+        result += `<tr>
+                      <td style="border: 1px solid grey">${book.id}</td>
+                      <td style="border: 1px solid grey">${book.title}</td>
+                      <td style="border: 1px solid grey">${book.description.slice(0,50)}...</td>
+                      <td style="border: 1px solid grey">${book.author}</td>
+                      <td style="border: 1px solid grey">${book.year}</td>
+                   </tr>`;
+    })
+    result += `</tbody></table>`;
+    res.status(200).send(result);
+})
+
+app.get('/books', (req, res) => {
     res.status(200).send(books);
 });
 
-app.post('/', (req, res) => {
+
+app.post('/books', (req, res) => {
     let book = req.body;
     let errMsg = [];
     if(!book.title) {
@@ -74,7 +79,7 @@ app.post('/', (req, res) => {
 app.get('/books/:id', (req, res) => {
     let index = books.findIndex(book => book.id === req.params.id);
     if(index === -1) {
-        res.status(404).send('The object not found');
+        res.status(404).send('The request object not found');
     }
     res.status(201).send(books[index]);
 });
@@ -82,7 +87,7 @@ app.get('/books/:id', (req, res) => {
 app.put('/books/:id', (req, res) => {
     let index = books.findIndex(book => book.id === req.params.id);
     if(index === -1) {
-        res.status(404).send('The object not found');
+        res.status(404).send('The request object not found');
     }
     books[index] = req.body;
     res.status(201).send(books[index]);
@@ -91,7 +96,7 @@ app.put('/books/:id', (req, res) => {
 app.patch('/books/:id', (req, res) => {
     let index = books.findIndex(book => book.id === req.params.id);
     if(index === -1) {
-        res.status(404).send('The object not found');
+        res.status(404).send('The request object not found');
     }
     books[index] = Object.assign( books[index], req.body);
     res.status(201).send(books[index]);
@@ -100,9 +105,9 @@ app.patch('/books/:id', (req, res) => {
 app.delete('/books/:id', (req, res) => {
     let index = books.findIndex(book => book.id === req.params.id);
     if(index === -1) {
-        res.status(404).send('The object not found');
+        res.status(404).send('The request object not found');
     }
-    books = books.filter(book => book.id !== req.params.id)
+    books.splice(index, 1);
     res.status(201).send(`The book successfully deleted`);
 });
 
